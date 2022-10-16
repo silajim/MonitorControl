@@ -2,37 +2,32 @@
 #define MONITORCONTROLLER_H
 
 #include <Windows.h>
-#include <vector>
-#include <highlevelmonitorconfigurationapi.h>
-#include <lowlevelmonitorconfigurationapi.h>
-#include <atlstr.h> // CW2A
-#include <PhysicalMonitorEnumerationAPI.h>
+#include <QThread>
+#include <QObject>
+#include <Dbt.h>
 
-#include <string>
-
-class MonitorController
+class MonitorController : public QThread
 {
+    Q_OBJECT
 public:
-    MonitorController();
+    explicit MonitorController(QObject *parent = nullptr);
     ~MonitorController();
-    void getPhysicalMonitors(HMONITOR hMonitor, std::vector<PHYSICAL_MONITOR> &Monitorsvec);
+    static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-    int capabilities(PHYSICAL_MONITOR hmonitor);
-    static bool getPathInfo(const MONITORINFOEXW &viewInfo, DISPLAYCONFIG_PATH_INFO *pathInfo);
+signals:
+    void DisplaysChanged();
 
 private:
-    bool GetMonitorCap();
-    bool getPrimaryMonitor();
-    bool getMonitorName();
-    bool getDisplayInfo();
-    bool getEdid();
-    std::wstring GetHKEY(HKEY key);
-    HMONITOR hmonitor;
-    DWORD dwMonitorCapabilities = 0;
-    DWORD dwSupportedColorTemperatures = 0;
-    std::wstring monitorFirendlyName;
-    DISPLAY_DEVICEW DisplayInfo;    
-    std::vector<PHYSICAL_MONITOR> physicalMonitors{};
+    HWND hwnd = NULL;
+    ATOM _atom = NULL;
+    HDEVNOTIFY devNotify=NULL;
+    LRESULT CALLBACK MyWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+
+
+    // QThread interface
+protected:
+    void run() override;
 };
 
 #endif // MONITORCONTROLLER_H
