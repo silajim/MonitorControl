@@ -22,6 +22,14 @@ public:
     DWORD getLastBigthness() const;
 
 
+    int getHeight() const;
+
+    int getWidth() const;
+
+    int getPosy() const;
+
+    int getPosx() const;
+
 private:
 
     void refreshHandle();
@@ -51,6 +59,8 @@ private:
     DWORD minBrightness;
     DWORD maxBrightness;
 
+    int height,width;
+    int posy,posx;
 };
 
 #endif // PRIMARYMONITOR_H

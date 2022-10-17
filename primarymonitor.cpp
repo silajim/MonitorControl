@@ -61,6 +61,12 @@ PrimaryMonitor::PrimaryMonitor()
         bSuccess = GetMonitorInfoW(hmonitor,&monitorInfo);
     }while(bSuccess==FALSE && GetLastError() == CheckSum_Error);
 
+    height = monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
+    width = monitorInfo.rcWork.right - monitorInfo.rcWork.left;
+
+    posy = monitorInfo.rcWork.top;
+    posx = monitorInfo.rcWork.left;
+
     std::wcout << "Monitor DEVICENAME " << monitorInfo.szDevice << std::endl;
 
     try{
@@ -583,6 +589,26 @@ std::wstring PrimaryMonitor::GetHKEY(HKEY key)
     }
 
     return keyPath;
+}
+
+int PrimaryMonitor::getPosx() const
+{
+    return posx;
+}
+
+int PrimaryMonitor::getPosy() const
+{
+    return posy;
+}
+
+int PrimaryMonitor::getWidth() const
+{
+    return width;
+}
+
+int PrimaryMonitor::getHeight() const
+{
+    return height;
 }
 
 DWORD PrimaryMonitor::getLastBigthness() const
