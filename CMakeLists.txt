@@ -18,5 +18,5 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 add_library(MonitorControl STATIC primarymonitor.cpp primarymonitor.h monitorcontroller.h monitorcontroller.cpp WindowsErrorException.h WindowsErrorException.cpp)
 
-target_include_directories(MonitorControl PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(MonitorControl PUBLIC Qt6::Core Dxva2 setupapi)
+target_include_directories(MonitorControl PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(MonitorControl PUBLIC Qt6::Core Dxva2 setupapi )

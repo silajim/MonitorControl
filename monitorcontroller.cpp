@@ -89,6 +89,8 @@ LRESULT CALLBACK MonitorController::WindowProc(HWND hwnd, UINT uMsg, WPARAM wPar
 
 }
 
+
+
 LRESULT MonitorController::MyWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     qDebug() << "MyWindowProc";
